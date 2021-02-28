@@ -12,11 +12,14 @@ pipeline {
     }
     stage('test') {
       steps {
-        sh 'python test.py'
+        sh """
+        . venv/bin/activate
+        python -m unittest test.py
+        """
       }
       post {
         always {
-          junit 'test-reports/*.xml'
+          sh 'rm -rf *'
         }
       }    
     }
